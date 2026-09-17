@@ -32,3 +32,18 @@ document.querySelector('.photo-prev').addEventListener('click',()=>movePhoto(-1)
 dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();movePhoto(-1);}if(e.key==='ArrowRight'){e.preventDefault();movePhoto(1);}});
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
 dialog.addEventListener('close',()=>trigger?.focus());
+
+const showingForm=document.querySelector('#showing-form');
+showingForm.addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(!showingForm.reportValidity())return;
+  const button=showingForm.querySelector('button[type="submit"]'),status=document.querySelector('#form-status');
+  button.disabled=true;button.textContent='Sending…';status.textContent='';status.dataset.state='';
+  try{
+    const response=await fetch('/api/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(showingForm))),signal:AbortSignal.timeout(20000)});
+    const result=await response.json().catch(()=>({}));
+    if(!response.ok||!result.ok)throw Error(result.error||'We couldn’t send your request. Please call Diana at 305-794-7294.');
+    status.textContent='Thank you! Your showing request has been sent. Diana will be in touch.';status.dataset.state='success';showingForm.reset();
+  }catch(error){status.textContent=error.name==='TimeoutError'?'The request timed out. Please call Diana at 305-794-7294.':error.message;status.dataset.state='error';}
+  finally{button.disabled=false;button.textContent='Request a showing ↗';}
+});

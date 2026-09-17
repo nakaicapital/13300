@@ -3,3 +3,5 @@ originals/
 .sites-runtime/
 node_modules/
 .vercel/
+.env
+.env.local

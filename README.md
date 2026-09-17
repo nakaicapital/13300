@@ -6,9 +6,15 @@ Static, dependency-free landing page for 13300 SW 99th Terrace, Miami, FL 33186.
 
 Run `python3 -m http.server 4173 --directory dist` from this folder.
 
-## GoHighLevel integration
+## Mailgun lead capture on Vercel
 
-Replace the contents of `#ghl-form-slot` in `dist/index.html` between the `GOHIGHLEVEL EMBED START` and `GOHIGHLEVEL EMBED END` comments with the supplied iframe and required script. Keep the wrapper and the `#contact` anchor. Remove the disabled placeholder fields and placeholder notice when the real embed is installed. The current placeholder does not collect or submit any information; call and email links work.
+The showing form posts to `/api/leads`, a Vercel function. Set `MAILGUN_API_KEY` (a domain sending key), `MAILGUN_DOMAIN=mail.dianapgomez.com`, and `MAILGUN_REGION=US` as Vercel environment variables, then redeploy. Never commit API keys. DNS/domain verification must be complete before sending.
+
+Sender name: 13300 Showing Lead. Sender address: leads at the configured Mailgun domain. Recipients: dianapagomez@gmail.com and miamihomesbyred@gmail.com. Reply-To is the visitor’s validated email. Tracking is disabled. No database is used. Missing configuration or Mailgun failures produce an error, not a false success. The function is available on Vercel only; a plain static server/Sites preview cannot process this form.
+
+Basic protections include fixed recipients, same-origin checks, validation, size/length limits and a honeypot. For public launch, enable Vercel firewall rate limiting or add a bot-challenge service; the honeypot alone is not robust abuse protection.
+
+Header logo source: https://kwcapital.kw.com/ (the Coral Gables office’s KW Capital logo). Agent name follows the user’s requested spelling, Diana P.A. Gomez. A public portrait was located on Homes.com but acquisition was blocked; the avatar was removed in favor of a contact-information card.
 
 ## Media and listing details
 
