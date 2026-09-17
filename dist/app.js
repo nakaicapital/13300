@@ -21,7 +21,7 @@ function makePhotoButton(index,label,featured=false){
   if(featured)button.className='gallery-card';
   button.setAttribute('aria-label',`View photo ${index+1}: ${photos[index].alt}`);
   const img=document.createElement('img');img.src=photos[index].src;img.alt=photos[index].alt;img.loading='lazy';img.width=800;img.height=533;button.append(img);
-  if(featured){const caption=document.createElement('span');caption.className='gallery-label';const title=document.createElement('span');title.textContent=label;const icon=document.createElement('span');icon.textContent='↗';icon.setAttribute('aria-hidden','true');caption.append(title,icon);button.append(caption);}
+  if(featured){const caption=document.createElement('span');caption.className='gallery-label';const title=document.createElement('span');title.textContent=label;const icon=document.createElement('span');icon.innerHTML='<svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';icon.setAttribute('aria-hidden','true');caption.append(title,icon);button.append(caption);}
   button.addEventListener('click',()=>{trigger=button;current=index;updatePhoto();dialog.showModal();});return button;
 }
 selected.forEach(([n,label])=>gallery.append(makePhotoButton(n-1,label,true)));
@@ -45,5 +45,5 @@ showingForm.addEventListener('submit',async event=>{
     if(!response.ok||!result.ok)throw Error(result.error||'We couldn’t send your request. Please call Diana at 305-794-7294.');
     status.textContent='Thank you! Your showing request has been sent. Diana will be in touch.';status.dataset.state='success';showingForm.reset();
   }catch(error){status.textContent=error.name==='TimeoutError'?'The request timed out. Please call Diana at 305-794-7294.':error.message;status.dataset.state='error';}
-  finally{button.disabled=false;button.textContent='Request a showing ↗';}
+  finally{button.disabled=false;button.innerHTML='Request a showing <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';}
 });

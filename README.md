@@ -14,7 +14,7 @@ Sender name: 13300 Showing Lead. Sender address: leads at the configured Mailgun
 
 Basic protections include fixed recipients, same-origin checks, validation, size/length limits and a honeypot. For public launch, enable Vercel firewall rate limiting or add a bot-challenge service; the honeypot alone is not robust abuse protection.
 
-Header logo source: https://kwcapital.kw.com/ (the Coral Gables office’s KW Capital logo). Agent name follows the user’s requested spelling, Diana P Gomez. A public portrait was located on Homes.com but acquisition was blocked; the avatar was removed in favor of a contact-information card.
+Header logo source: https://kwcapital.kw.com/ (the Coral Gables office’s KW Capital logo). Agent name follows the user’s requested spelling, Diana P. Gomez. A public portrait was located on Homes.com but acquisition was blocked; the avatar was removed in favor of a contact-information card.
 
 ## Media and listing details
 
