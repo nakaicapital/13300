@@ -1,0 +1,12 @@
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+const data = JSON.parse(await readFile('/private/tmp/calusa-media.json','utf8'));
+const gallery = data.displaySections.find(s=>s.sectionTypeName==='PhotoGallery').assetList;
+await mkdir('dist/assets/photos',{recursive:true});
+const files = gallery.map((p,i)=>({src:`assets/photos/${String(i+1).padStart(2,'0')}.jpg`,source:p.photoURL,originalName:p.title}));
+let next = 0;
+await Promise.all(Array.from({length:6},async()=>{while(next<files.length){const p=files[next++];execFileSync('curl',['-sSL','--fail',p.source,'-o',`dist/${p.src}`]);}}));
+const floor = data.displaySections.find(s=>s.sectionTypeName==='FloorPlan');
+console.log('Downloaded',files.length,'photos');
+console.log('Floor plan:',JSON.stringify(floor));
+await writeFile('dist/photos.json',JSON.stringify(files,null,2));

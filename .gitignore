@@ -1,0 +1,4 @@
+.DS_Store
+originals/
+.sites-runtime/
+node_modules/
